@@ -6,7 +6,7 @@ P VENKATA BALAJI
 2305001024
 
 ### Aim:
-
+To find the PEAS description for the given AI problem and develop an AI agent
 ### Theory :
 PEAS stands for:
 '''
@@ -36,7 +36,7 @@ It’s a framework used to define the task environment for an AI agent clearly.
 5. Personal assistant (like Siri or Alexa)
 ```
 
-### VacuumCleanerAgent
+### SPAM MAIL
 ### Algorithm:
 Step 1: Prepare Dataset
 
@@ -92,7 +92,7 @@ prediction = model.predict(test_vector)
 print("Email:", test_email[0])
 print("Prediction:", prediction[0])
 ```
-### Sample Output:
+### Output:
 
 <img width="364" height="72" alt="image" src="https://github.com/user-attachments/assets/73abb029-550c-4b18-b7f5-e935c9b48108" />
 
