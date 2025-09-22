@@ -4,7 +4,6 @@
 ### Register Number:
 
 ### Aim:
-To find the PEAS description for the given AI problem and develop an AI agent.
 
 ### Theory :
 PEAS stands for:
@@ -37,85 +36,63 @@ It’s a framework used to define the task environment for an AI agent clearly.
 
 ### VacuumCleanerAgent
 ### Algorithm:
-Step 1: Initialize:
+Step 1: Prepare Dataset
 
-Set agent’s location to A
+Collect sample emails and their corresponding labels (spam or ham).
 
-Set environment dirt status for locations A and B (True = dirty, False = clean)
+Step 2: Convert Text to Numeric Features
 
-Step 2 :Repeat until all locations are clean (no dirt):
-a. Sense if current location has dirt
-b. If current location has dirt:
-- Suck dirt (set dirt status at current location to False)
-c. Else:
-- If current location is A, move right to location B
-- Else if current location is B, move left to location A
-d. Print the agent’s current location and dirt status (optional for debugging)
+Use CountVectorizer to transform email text into a numeric feature vector.
 
-Step 3: Stop when all locations are clean
+Each unique word becomes a feature.
 
-Step 4: Print total steps taken (optional)
+Each email is converted into a vector representing word counts.
+
+Step 3: Train Classifier
+
+Use Multinomial Naive Bayes to train on the numeric vectors and labels.
+
+The model learns which words are likely associated with spam vs ham.
+
+Step 4: Test New Email
+
+Convert the new email into a numeric vector using the same CountVectorizer.
+
+Use the trained Naive Bayes model to predict whether the new email is "spam" or "ham".
+
+Step 5: 
+Print the email content and predicted label.
 
 ### Program:
 ```
-class VacuumCleanerAgent:
-    def __init__(self):
-        # Initialize the agent's state (location and dirt status)
-        self.location = "A"  # Initial location (can be "A" or "B")
-        self.dirt_status = {"A": False, "B": False}  # Initial dirt status (False means no dirt)
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+emails = [
+    "Win money now!!!", 
+    "Lowest price for medicines", 
+    "Hi, how are you?", 
+    "Meeting tomorrow at 10am", 
+    "Congratulations, you won a lottery", 
+    "Reminder: project submission"
+]
+labels = ["spam", "spam", "ham", "ham", "spam", "ham"]
 
-    def move_left(self):
-        # Move the agent to the left if possible
-        if self.location == "B":
-            self.location = "A"
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(emails)
 
-    def move_right(self):
-        # Move the agent to the right if possible
-        if self.location == "A":
-            self.location = "B"
+model = MultinomialNB()
+model.fit(X, labels)
 
-    def suck_dirt(self):
-        # Suck dirt in the current location if there is dirt
-        if self.dirt_status[self.location]:
-            self.dirt_status[self.location] = False
-            print(f"Sucked dirt in location {self.location}")
+test_email = ["Get cheap loans now"]
+test_vector = vectorizer.transform(test_email)
+prediction = model.predict(test_vector)
 
-    def do_nothing(self):
-        # Do nothing
-        pass
-
-    def perform_action(self, action):
-        # Perform the specified action
-        if action == "left":
-            self.move_left()
-        elif action == "right":
-            self.move_right()
-        elif action == "suck":
-            self.suck_dirt()
-        elif action == "nothing":
-            self.do_nothing()
-        else:
-            print("Invalid action")
-
-    def print_status(self):
-        # Print the current status of the agent
-        print(f"Location: {self.location}, Dirt Status: {self.dirt_status}")
-
-# Example usage:
-agent = VacuumCleanerAgent()
-
-
-# Move the agent, suck dirt, and do nothing
-
-agent.perform_action("left")
-agent.print_status()
-agent.perform_action("suck")
-agent.print_status()
-agent.perform_action("nothing")
-agent.print_status()
+print("Email:", test_email[0])
+print("Prediction:", prediction[0])
 ```
 ### Sample Output:
 
-425810495-d1198ba7-da19-413b-9907-4844afae627f
+<img width="364" height="72" alt="image" src="https://github.com/user-attachments/assets/73abb029-550c-4b18-b7f5-e935c9b48108" />
 
 ### Result:
+Thus,The program for spam mail filer was implement and excuted
