@@ -38,63 +38,61 @@ It’s a framework used to define the task environment for an AI agent clearly.
 
 ### SPAM MAIL
 ### Algorithm:
-Step 1: Prepare Dataset
+Step 1: Define a list of spam keywords (e.g., “lottery”, “win money”, “free”, “click here”).
 
-Collect sample emails and their corresponding labels (spam or ham).
+Step 2: Take incoming email text as input.
 
-Step 2: Convert Text to Numeric Features
+Step 3: Scan for presence of spam keywords.
 
-Use CountVectorizer to transform email text into a numeric feature vector.
+Step 4: If spam keywords found → classify as SPAM, else classify as NOT SPAM.
 
-Each unique word becomes a feature.
-
-Each email is converted into a vector representing word counts.
-
-Step 3: Train Classifier
-
-Use Multinomial Naive Bayes to train on the numeric vectors and labels.
-
-The model learns which words are likely associated with spam vs ham.
-
-Step 4: Test New Email
-
-Convert the new email into a numeric vector using the same CountVectorizer.
-
-Use the trained Naive Bayes model to predict whether the new email is "spam" or "ham".
-
-Step 5: 
-Print the email content and predicted label.
-
+Step 5: Print result for each email.
 ### Program:
 ```
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+class SpamFilterAgent:
+
+def __init__(self):
+
+    # Simple spam keywords list
+    
+    self.spam_keywords = ["lottery", "win money", "free", "offer", "click here", "prize", "urgent"]
+    
+
+def classify_email(self, email_text):
+
+    # Check if any spam keyword exists in the email
+    
+    for keyword in self.spam_keywords:
+    
+        if keyword.lower() in email_text.lower():
+        
+            return "SPAM"
+            
+    return "NOT SPAM"
+#For example
+
+agent = SpamFilterAgent()
+
 emails = [
-    "Win money now!!!", 
-    "Lowest price for medicines", 
-    "Hi, how are you?", 
-    "Meeting tomorrow at 10am", 
-    "Congratulations, you won a lottery", 
-    "Reminder: project submission"
+
+"Congratulations! You have won a lottery. Click here to claim your prize.",
+
+"Dear user, your account statement is attached for reference.",
+
+"Urgent offer!!! Win money now by signing up for free.",
+
+"Meeting scheduled tomorrow at 10 AM. Please attend on time."
 ]
-labels = ["spam", "spam", "ham", "ham", "spam", "ham"]
 
-vectorizer = CountVectorizer()
-X = vectorizer.fit_transform(emails)
+for i, email in enumerate(emails, start=1):
 
-model = MultinomialNB()
-model.fit(X, labels)
+result = agent.classify_email(email)
 
-test_email = ["Get cheap loans now"]
-test_vector = vectorizer.transform(test_email)
-prediction = model.predict(test_vector)
-
-print("Email:", test_email[0])
-print("Prediction:", prediction[0])
+print(f"Email {i}: {result}")
 ```
 ### Output:
 
-<img width="364" height="72" alt="image" src="https://github.com/user-attachments/assets/73abb029-550c-4b18-b7f5-e935c9b48108" />
+<img width="668" height="113" alt="image" src="https://github.com/user-attachments/assets/2d8cf527-587b-4c29-b60f-3a2dd7069b67" />
 
 ### Result:
 Thus,The program for spam mail filer was implement and excuted
